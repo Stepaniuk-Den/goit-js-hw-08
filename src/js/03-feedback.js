@@ -1,23 +1,31 @@
 import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
-const inputEmail = form.querySelector('input');
-const inputMessage = form.querySelector('textarea');
 const KEY_FEEDBACK = 'feedback-form-state';
+const newArr = JSON.parse(localStorage.getItem(KEY_FEEDBACK)) || {};
 
-const arr = {};
+form.addEventListener(
+  'input',
+  throttle(evt => {
+    newArr[evt.target.name] = evt.target.value;
+    localStorage.setItem(KEY_FEEDBACK, JSON.stringify(newArr));
+  }, 500)
+);
 
-inputEmail.addEventListener('input', evt => {
-  arr.email = evt.currentTarget.value;
-  localStorage.setItem(KEY_FEEDBACK, JSON.stringify(arr));
-});
-inputMessage.addEventListener('input', evt => {
-  arr.message = evt.currentTarget.value;
-  localStorage.setItem(KEY_FEEDBACK, JSON.stringify(arr));
-});
+form.addEventListener('submit', handleSubmit);
+
+function handleSubmit(evt) {
+  evt.preventDefault();
+  console.log(newArr);
+  localStorage.removeItem(KEY_FEEDBACK);
+  form.reset();
+}
 
 function reload() {
-  // if (localStorage.getItem(KEY_FEEDBACK) !== {})
-  //   inputEmail.textContent = JSON.parse(localStorage.getItem(KEY_FEEDBACK));
+  for (let el of form) {
+    if (newArr && Object.keys(newArr).includes(el.name)) {
+      el.value = newArr[el.name];
+    }
+  }
 }
 reload();
