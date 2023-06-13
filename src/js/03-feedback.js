@@ -16,7 +16,8 @@ inputMessage.addEventListener('input', evt => {
   localStorage.setItem(KEY_FEEDBACK, JSON.stringify(arr));
 });
 
-// function reload (evt) {
-// if()
-// }
-// reload();
+function reload() {
+  // if (localStorage.getItem(KEY_FEEDBACK) !== {})
+  //   inputEmail.textContent = JSON.parse(localStorage.getItem(KEY_FEEDBACK));
+}
+reload();
