@@ -2,7 +2,7 @@ import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
 const KEY_FEEDBACK = 'feedback-form-state';
-const newArr = JSON.parse(localStorage.getItem(KEY_FEEDBACK)) || {};
+let newArr = JSON.parse(localStorage.getItem(KEY_FEEDBACK)) || {};
 
 form.addEventListener(
   'input',
@@ -19,6 +19,7 @@ function handleSubmit(evt) {
   console.log(newArr);
   localStorage.removeItem(KEY_FEEDBACK);
   form.reset();
+  newArr = {};
 }
 
 function reload() {
